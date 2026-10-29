@@ -3,6 +3,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const intro = document.getElementById("intro");
     const enterBtn = document.getElementById("enterBtn");
     const nav = document.getElementById("nav");
+    const navToggle = document.getElementById("navToggle");
+    const cursorGlow = document.getElementById("cursorGlow");
+    const particles = document.getElementById("particles");
+    const prefersReducedMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hasFinePointer =
+        window.matchMedia("(pointer: fine)").matches;
+    const isSmallScreen =
+        window.matchMedia("(max-width: 600px)").matches;
+    const particleSettings = isSmallScreen
+        ? { interval: 1100, limit: 16, burst: 36 }
+        : { interval: 500, limit: 45, burst: 100 };
 
     /* =========================
        OPEN INVITATION
@@ -12,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         enterBtn.addEventListener("click", function () {
 
-            console.log("OPEN BUTTON CLICKED");
+            if (intro.classList.contains("open")) return;
 
             intro.classList.add("open");
 
@@ -43,6 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createParticle() {
 
+        if (
+            prefersReducedMotion ||
+            document.visibilityState !== "visible" ||
+            !particles ||
+            particles.childElementCount >= particleSettings.limit
+        ) {
+            return;
+        }
+
         const particle = document.createElement("div");
 
         particle.className = "gold-particle";
@@ -62,12 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         particle.style.animationDuration =
             (5 + Math.random() * 8) + "s";
 
-        const particles =
-            document.getElementById("particles");
-
-        if (particles) {
-            particles.appendChild(particle);
-        }
+        particles.appendChild(particle);
 
         setTimeout(function () {
             particle.remove();
@@ -76,7 +92,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    setInterval(createParticle, 500);
+    if (!prefersReducedMotion) {
+        setInterval(createParticle, particleSettings.interval);
+    }
 
 
     /* =========================
@@ -85,7 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createGoldBurst() {
 
-        for (let i = 0; i < 100; i++) {
+        if (prefersReducedMotion || !particles) return;
+
+        for (let i = 0; i < particleSettings.burst; i++) {
 
             const particle =
                 document.createElement("div");
@@ -114,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const y =
                 Math.sin(angle) * distance;
 
-            document.body.appendChild(particle);
+            particles.appendChild(particle);
 
             particle.animate(
                 [
@@ -332,6 +352,34 @@ document.addEventListener("DOMContentLoaded", function () {
        NAV LINKS
     ========================= */
 
+    function closeNavigationMenu() {
+        if (!nav || !navToggle) return;
+
+        nav.classList.remove("menu-open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open navigation menu");
+    }
+
+    if (nav && navToggle) {
+        navToggle.addEventListener("click", function () {
+            const isExpanded =
+                navToggle.getAttribute("aria-expanded") === "true";
+
+            nav.classList.toggle("menu-open", !isExpanded);
+            navToggle.setAttribute("aria-expanded", String(!isExpanded));
+            navToggle.setAttribute(
+                "aria-label",
+                isExpanded ? "Open navigation menu" : "Close navigation menu"
+            );
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeNavigationMenu();
+            }
+        });
+    }
+
     document.querySelectorAll(
         ".nav-links a"
     ).forEach(
@@ -345,6 +393,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         nav.classList.add("visible");
                     }
 
+                    closeNavigationMenu();
                 }
             );
 
@@ -356,48 +405,13 @@ document.addEventListener("DOMContentLoaded", function () {
        MOUSE GOLD GLOW
     ========================= */
 
-    document.addEventListener(
-        "mousemove",
-        function (event) {
-
-            const glow =
-                document.createElement("div");
-
-            glow.style.position = "fixed";
-
-            glow.style.left =
-                event.clientX + "px";
-
-            glow.style.top =
-                event.clientY + "px";
-
-            glow.style.width = "4px";
-            glow.style.height = "4px";
-
-            glow.style.borderRadius = "50%";
-
-            glow.style.background = "#e4c477";
-
-            glow.style.pointerEvents = "none";
-
-            glow.style.zIndex = "999";
-
-            glow.style.boxShadow =
-                "0 0 12px #e4c477";
-
-            glow.style.opacity = ".35";
-
-            document.body.appendChild(glow);
-
-            setTimeout(
-                function () {
-                    glow.remove();
-                },
-                250
-            );
-
-        }
-    );
+    if (hasFinePointer && !prefersReducedMotion && cursorGlow) {
+        document.addEventListener("mousemove", function (event) {
+            cursorGlow.style.transform =
+                `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+            cursorGlow.classList.add("visible");
+        });
+    }
 
 
 /* ==========================================

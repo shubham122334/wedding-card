@@ -20,7 +20,8 @@
      GOLD PARTICLES
 ================================ -->
 
-<div id="particles"></div>
+<div id="particles" aria-hidden="true"></div>
+<div id="cursorGlow" class="cursor-glow" aria-hidden="true"></div>
 
 
 <!-- ==============================
@@ -72,13 +73,26 @@
      NAVIGATION
 ================================ -->
 
-<nav id="nav">
+<nav id="nav" aria-label="Main navigation">
 
     <div class="nav-logo">
         S <span>♥</span> P
     </div>
 
-    <div class="nav-links">
+    <button
+        id="navToggle"
+        class="nav-toggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-controls="navLinks"
+        aria-expanded="false"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="nav-links" id="navLinks">
         <a href="#home">HOME</a>
         <a href="#story">STORY</a>
         <a href="#events">EVENTS</a>
@@ -576,4 +590,3 @@
 
 </body>
 </html>
-

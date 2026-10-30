@@ -747,6 +747,200 @@ body {
 }
 
 
+/* MEET THE FAMILIES */
+
+.families-section {
+    padding: 90px 20px;
+    background: linear-gradient(135deg, #350714, #5b1028, #350714);
+    color: #f8e8c4;
+    text-align: center;
+}
+
+.families-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.families-subtitle {
+    color: #d9b66e;
+    letter-spacing: 4px;
+    font-size: 12px;
+}
+
+.families-section h2 {
+    font-family: Georgia, serif;
+    color: #e8c77e;
+    font-size: 42px;
+    font-weight: normal;
+    margin: 15px 0;
+}
+
+.families-divider,
+.family-ornament {
+    color: #d9b66e;
+    font-size: 25px;
+    margin: 15px 0;
+}
+
+.families-intro {
+    max-width: 650px;
+    margin: 0 auto 45px;
+    line-height: 1.8;
+    color: #f1dfc2;
+}
+
+.families-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+}
+
+.family-card {
+    padding: 30px 25px;
+    border: 1px solid rgba(220, 185, 112, 0.55);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.045);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.family-image {
+    width: 100%;
+    max-width: 380px;
+    height: 250px;
+    margin: 0 auto 25px;
+    border: 3px solid #d9b66e;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.family-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.family-label {
+    color: #d9b66e;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+.family-card h3 {
+    font-family: Georgia, serif;
+    font-size: 27px;
+    color: #f0d394;
+    font-weight: normal;
+    margin: 12px 0;
+}
+
+.family-parents {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.family-parents strong {
+    color: #f0d394;
+}
+
+.family-message {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #ead9bd;
+    margin-top: 15px;
+}
+
+.families-footer {
+    margin-top: 45px;
+    color: #e8c77e;
+    font-family: Georgia, serif;
+    font-size: 20px;
+}
+
+@media (max-width: 700px) {
+    .families-section {
+        padding: 65px 15px;
+    }
+
+    .families-section h2 {
+        font-size: 33px;
+    }
+
+    .families-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .family-card {
+        padding: 22px 16px;
+    }
+
+    .family-image {
+        height: 230px;
+    }
+}
+
+/* FLOATING WEDDING MUSIC BUTTON */
+
+.music-toggle {
+    position: fixed;
+    right: 22px;
+    bottom: 25px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 13px 20px;
+    border: 1px solid #e8c77e;
+    border-radius: 50px;
+
+    background: linear-gradient(135deg, #5b1028, #350714);
+    color: #f0d394;
+
+    font-family: Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.35);
+
+    transition: all 0.3s ease;
+}
+
+.music-toggle:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+}
+
+#musicIcon {
+    font-size: 23px;
+    line-height: 1;
+}
+
+.music-toggle.is-playing #musicIcon {
+    animation: musicPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes musicPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+@media (max-width: 600px) {
+    .music-toggle {
+        right: 14px;
+        bottom: 16px;
+        padding: 11px 16px;
+        font-size: 12px;
+    }
+}
+
 /* ==============================
    EVENTS
 ================================ */

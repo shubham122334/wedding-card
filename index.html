@@ -89,7 +89,11 @@
             INVITE YOU TO CELEBRATE THEIR LOVE
         </p>
 
-        <button id="enterBtn">
+        <button id="enterBtn" class="musicToggle"
+        class="music-toggle"
+        type="button"
+        aria-label="Play wedding music"
+        aria-pressed="false">
             <span>OPEN THE INVITATION</span>
             <b>✦</b>
         </button>
@@ -307,6 +311,87 @@
 
 </section>
 
+<!-- MEET THE FAMILIES SECTION -->
+<section id="families" class="families-section">
+
+    <div class="families-container">
+
+        <p class="families-subtitle">TWO FAMILIES, ONE BEAUTIFUL BOND</p>
+
+        <h2>Meet the Families</h2>
+
+        <div class="families-divider">✦</div>
+
+        <p class="families-intro">
+            A beautiful union of two families, traditions and hearts.
+            With the blessings of our loved ones, we begin a new journey together.
+        </p>
+
+        <div class="families-grid">
+
+            <!-- GROOM'S FAMILY -->
+            <div class="family-card">
+
+                <div class="family-image">
+                    <img src="assets/groom-family.png"
+                         alt="Shubham's family">
+                </div>
+
+                <p class="family-label">THE GROOM'S SIDE</p>
+
+                <h3>Groom's Family</h3>
+
+                <div class="family-ornament">❖</div>
+
+                <p class="family-parents">
+                    Son of <strong>Aditya Vikram</strong>
+                    and <strong>Prem Lata</strong>
+                </p>
+
+                <p class="family-message">
+                    With love, blessings and cherished traditions,
+                    Shubham's family welcomes you to celebrate
+                    this beautiful occasion.
+                </p>
+
+            </div>
+
+            <!-- BRIDE'S FAMILY -->
+            <div class="family-card">
+
+                <div class="family-image">
+                    <img src="assets/bride-family.png"
+                         alt="Priyanka's family">
+                </div>
+
+                <p class="family-label">THE BRIDE'S SIDE</p>
+
+                <h3>Bride's Family</h3>
+
+                <div class="family-ornament">❖</div>
+
+                <p class="family-parents">
+                    Daughter of <strong> Ram Anuj</strong>
+                    and <strong>Urmila</strong>
+                </p>
+
+                <p class="family-message">
+                    With warmth, happiness and heartfelt blessings,
+                    Priyanka's family invites you to share
+                    in their joy.
+                </p>
+
+            </div>
+
+        </div>
+
+        <p class="families-footer">
+            Together, we celebrate love, family and forever.
+        </p>
+
+    </div>
+
+</section>
 
 <!-- ==============================
      EVENTS
@@ -615,8 +700,82 @@
 
 </section>
 
+<!-- WEDDING BACKGROUND MUSIC -->
+<audio id="weddingMusic" loop-preload="auto">
+    <source src="assets/wedding-music.mp3" type="audio/mpeg">
+    Your browser does not support audio playback.
+</audio>
+<!-- <button class="musicToggle music-toggle" 
+        type="button"
+        aria-label="Play wedding music"
+        aria-pressed="false">
+
+    <span id="musicIcon">♫</span>
+    <span id="musicText">Play Music</span>
+
+</button> -->
 
 <script src="script.js"></script>
 
+
+<script>
+    
+
+// WEDDING MUSIC PLAYER
+
+const weddingMusic = document.getElementById("weddingMusic");
+const musicToggle = document.querySelector(".musicToggle");
+const musicIcon = document.getElementById("musicIcon");
+const musicText = document.getElementById("musicText");
+
+musicToggle.addEventListener("click", async () => {
+
+    if (weddingMusic.paused) {
+
+        try {
+            await weddingMusic.play();
+
+            musicToggle.classList.add("is-playing");
+            musicIcon.textContent = "♫";
+            musicText.textContent = "Pause Music";
+
+            musicToggle.setAttribute("aria-label", "Pause wedding music");
+            musicToggle.setAttribute("aria-pressed", "true");
+
+        } catch (error) {
+            musicText.textContent = "Try Again";
+            console.error("Music playback failed:", error);
+        }
+
+    } else {
+
+        weddingMusic.pause();
+
+        musicToggle.classList.remove("is-playing");
+        musicIcon.textContent = "♫";
+        musicText.textContent = "Play Music";
+
+        musicToggle.setAttribute("aria-label", "Play wedding music");
+        musicToggle.setAttribute("aria-pressed", "false");
+    }
+
+});
+
+// Keep button state synchronized if playback stops or pauses.
+weddingMusic.addEventListener("pause", () => {
+    musicToggle.classList.remove("is-playing");
+    musicText.textContent = "Play Music";
+    musicToggle.setAttribute("aria-label", "Play wedding music");
+    musicToggle.setAttribute("aria-pressed", "false");
+});
+
+weddingMusic.addEventListener("play", () => {
+    musicToggle.classList.add("is-playing");
+    musicText.textContent = "Pause Music";
+    musicToggle.setAttribute("aria-label", "Pause wedding music");
+    musicToggle.setAttribute("aria-pressed", "true");
+});
+
+</script>
 </body>
 </html>
